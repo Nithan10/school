@@ -13,46 +13,50 @@ import {
   Target, 
   Zap, 
   TrendingUp,
-  Star 
+  Star,
+  Sun
 } from "lucide-react";
 
-const FeatureCard = ({ icon: Icon, title, description, gradient }: { icon: React.ElementType; title: string; description: string; gradient: string }) => (
+const FeatureCard = ({ icon: Icon, title, description, color, shadowColor }: { icon: React.ElementType; title: string; description: string; color: string; shadowColor: string }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-50px" }}
-    whileHover={{ y: -4, scale: 1.02 }}
-    className="relative group"
+    whileHover={{ y: -8, scale: 1.02 }}
+    className="relative group h-full"
   >
-    {/* Hover Glow Effect */}
-    <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-20 rounded-xl md:rounded-2xl blur-xl transition-opacity duration-500`} />
-    
     {/* Card Content */}
-    <div className="relative bg-slate-900/50 backdrop-blur-md p-4 md:p-6 rounded-xl md:rounded-2xl border border-white/10 hover:border-white/20 shadow-xl transition-all duration-500 h-full">
-      <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center mb-3 md:mb-4 shadow-lg shadow-purple-900/20`}>
-        <Icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
+    <div className={`relative bg-white p-6 rounded-[2rem] border-4 border-white shadow-xl ${shadowColor} transition-all duration-300 h-full overflow-hidden`}>
+      {/* Decorative Gradient Blob */}
+      <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br ${color} opacity-10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500`} />
+      
+      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-4 shadow-lg text-white transform group-hover:rotate-12 transition-transform duration-300`}>
+        <Icon className="w-7 h-7" />
       </div>
-      <h4 className="text-base md:text-lg font-bold text-white mb-1 md:mb-2">{title}</h4>
-      <p className="text-xs md:text-sm text-slate-400 leading-relaxed">{description}</p>
+      <h4 className="text-xl font-black text-slate-800 mb-2">{title}</h4>
+      <p className="text-sm text-slate-500 font-medium leading-relaxed">{description}</p>
     </div>
   </motion.div>
 );
 
-const StatCard = ({ value, label, icon: Icon }: { value: string; label: string; icon: React.ElementType }) => (
+const StatCard = ({ value, label, icon: Icon, color }: { value: string; label: string; icon: React.ElementType; color: string }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-50px" }}
-    whileHover={{ scale: 1.05, y: -5 }}
+    whileHover={{ scale: 1.05, rotate: -2 }}
     className="relative group"
   >
-    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-xl md:rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-    <div className="relative bg-slate-900/80 backdrop-blur-sm p-4 md:p-6 rounded-xl md:rounded-2xl border border-white/5 group-hover:border-purple-500/30 shadow-lg text-center transition-colors">
-      <div className="flex items-center justify-center mb-2 md:mb-3">
-        <Icon className="w-6 h-6 md:w-8 md:h-8 text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]" />
+    <div className={`relative bg-white p-6 rounded-[2rem] border-4 border-white shadow-xl hover:shadow-2xl transition-all`}>
+      <div className="flex items-center justify-center mb-3">
+        <div className={`p-3 rounded-full bg-${color}-100 text-${color}-500`}>
+             <Icon className={`w-8 h-8 ${color === 'yellow' ? 'text-yellow-500' : color === 'pink' ? 'text-pink-500' : 'text-blue-500'}`} />
+        </div>
       </div>
-      <h4 className="text-2xl md:text-3xl lg:text-4xl font-black text-white mb-1">{value}</h4>
-      <p className="text-xs text-slate-400 font-semibold uppercase tracking-wide">{label}</p>
+      <h4 className={`text-4xl font-black mb-1 bg-gradient-to-r ${color === 'yellow' ? 'from-yellow-400 to-orange-500' : color === 'pink' ? 'from-pink-400 to-rose-500' : 'from-blue-400 to-cyan-500'} bg-clip-text text-transparent`}>
+        {value}
+      </h4>
+      <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">{label}</p>
     </div>
   </motion.div>
 );
@@ -71,38 +75,41 @@ export default function AboutUsPremium() {
       icon: Target,
       title: "Personalized Learning",
       description: "Tailored education paths that adapt to each child's unique learning style and pace.",
-      gradient: "from-purple-500 to-pink-500"
+      color: "from-purple-400 to-purple-600",
+      shadowColor: "hover:shadow-purple-200"
     },
     {
       icon: Award,
       title: "Expert Educators",
       description: "Certified teachers with passion for nurturing young minds and fostering creativity.",
-      gradient: "from-blue-500 to-cyan-500"
+      color: "from-blue-400 to-blue-600",
+      shadowColor: "hover:shadow-blue-200"
     },
     {
       icon: Heart,
       title: "Safe Environment",
       description: "Secure, inspiring spaces designed for exploration, growth, and joyful learning.",
-      gradient: "from-orange-500 to-red-500"
+      color: "from-pink-400 to-rose-600",
+      shadowColor: "hover:shadow-pink-200"
     },
     {
       icon: Zap,
       title: "Holistic Development",
       description: "Focus on academic, social, emotional, and physical growth for well-rounded students.",
-      gradient: "from-green-500 to-emerald-500"
+      color: "from-yellow-400 to-orange-500",
+      shadowColor: "hover:shadow-orange-200"
     },
   ];
 
   return (
-    <section className="relative w-full flex items-center justify-center bg-slate-950 overflow-hidden py-12 md:py-16 lg:py-24" id="about">
+    <section className="relative w-full flex items-center justify-center bg-sky-50 overflow-hidden py-16 md:py-24" id="about">
       
-      {/* Background Elements */}
+      {/* Background Playful Elements */}
       <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
-        {/* Subtle dark grid texture */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-        {/* Ambient Glows */}
-        <div className="absolute top-0 left-1/4 w-64 h-64 md:w-[400px] md:h-[400px] lg:w-[600px] lg:h-[600px] bg-gradient-to-br from-purple-900/20 to-pink-900/20 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-0 w-64 h-64 md:w-[400px] md:h-[400px] bg-gradient-to-tr from-blue-900/20 to-cyan-900/20 rounded-full blur-[100px]" />
+        {/* Soft Blobs */}
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-yellow-200/40 rounded-full blur-[100px] mix-blend-multiply animate-pulse" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-pink-200/40 rounded-full blur-[100px] mix-blend-multiply animate-pulse" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-200/30 rounded-full blur-[120px] mix-blend-multiply" />
       </div>
 
       {/* Main Content */}
@@ -110,59 +117,67 @@ export default function AboutUsPremium() {
         <div className="max-w-7xl mx-auto">
           
           {/* Top Section */}
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-24 items-center mb-12 md:mb-16 lg:mb-20">
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 items-center mb-20">
             
             {/* LEFT: Content */}
-            <div className="flex-1 space-y-6 md:space-y-8">
+            <div className="flex-1 space-y-8">
               {/* Badge */}
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-slate-900/80 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.15)]">
-                  <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-purple-400" />
-                  <span className="text-purple-300 text-xs font-bold uppercase tracking-wider">Who We Are</span>
-                </div>
-              </div>
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border-2 border-yellow-400 shadow-[4px_4px_0px_0px_rgba(250,204,21,1)]"
+              >
+                <Sun className="w-5 h-5 text-yellow-500 animate-spin-slow" />
+                <span className="text-slate-700 text-sm font-bold uppercase tracking-wider">Who We Are</span>
+              </motion.div>
 
               {/* Heading */}
-              <div className="space-y-2">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tight leading-[1.1]">
+              <div className="space-y-4">
+                <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1]">
                   Building Strong
                   <br />
-                  <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent filter drop-shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500">
                     Foundations
                   </span>
                 </h2>
               </div>
 
               {/* Description */}
-              <p className="text-base md:text-lg lg:text-xl text-slate-300 leading-relaxed">
+              <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed">
                 We provide a seamless learning journey tailored for every stage of early development. From playful exploration to structured academic excellence, we focus on{" "}
-                <span className="font-bold text-purple-400">holistic growth</span> and{" "}
-                <span className="font-bold text-purple-400">lifelong success</span>.
+                <span className="bg-yellow-100 text-yellow-800 px-1 rounded font-bold">holistic growth</span> and{" "}
+                <span className="bg-sky-100 text-sky-800 px-1 rounded font-bold">lifelong success</span>.
               </p>
 
               {/* Key Points */}
-              <div className="space-y-3 md:space-y-4">
+              <div className="space-y-4">
                 {[
                   "Individual attention for every child's unique potential",
                   "Modern facilities with latest educational technology",
                   "Strong parent-teacher partnership for success"
                 ].map((point, idx) => (
-                  <div key={idx} className="flex items-start gap-3 group">
-                    <div className="p-1 rounded-full bg-purple-900/30 text-purple-400 border border-purple-500/20 group-hover:border-purple-500/50 group-hover:scale-110 transition-all mt-0.5">
-                      <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5" strokeWidth={2.5} />
+                  <motion.div 
+                    key={idx} 
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex items-start gap-4 group"
+                  >
+                    <div className="p-1.5 rounded-full bg-green-100 text-green-600 group-hover:bg-green-500 group-hover:text-white transition-colors mt-0.5 shadow-sm">
+                      <CheckCircle2 className="w-5 h-5" strokeWidth={3} />
                     </div>
-                    <span className="text-slate-300 font-medium text-sm md:text-base leading-relaxed">{point}</span>
-                  </div>
+                    <span className="text-slate-700 font-bold text-base md:text-lg">{point}</span>
+                  </motion.div>
                 ))}
               </div>
 
               {/* CTA */}
-              <div className="pt-2 md:pt-4">
+              <div className="pt-4">
                 {isMounted && (
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-base md:text-lg px-6 md:px-8 py-4 md:py-6 rounded-xl md:rounded-2xl shadow-[0_0_20px_rgba(147,51,234,0.3)] flex items-center justify-center gap-2 md:gap-3 hover:shadow-[0_0_30px_rgba(147,51,234,0.5)] transition-all border border-white/10"
-                    endContent={<ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />}
+                    className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white font-bold text-lg px-8 py-7 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center justify-center gap-3 group"
+                    endContent={<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
                   >
                     Start Your Journey
                   </Button>
@@ -170,69 +185,76 @@ export default function AboutUsPremium() {
               </div>
             </div>
 
-            {/* RIGHT: Image */}
-            <div className="flex-1 relative w-full lg:h-[500px] flex items-center justify-center">
-              <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl shadow-purple-900/20 group border border-white/10">
+            {/* RIGHT: Image & Floating Elements */}
+            <div className="flex-1 relative w-full lg:h-[600px] flex items-center justify-center">
+              
+              {/* Main Image with Sticker Border */}
+              <motion.div 
+                whileHover={{ scale: 1.02, rotate: 1 }}
+                className="relative w-full h-[350px] sm:h-[450px] lg:h-[550px] rounded-[3rem] overflow-hidden shadow-2xl border-[8px] border-white z-10"
+              >
+               
                 <img 
                   src="/aboutus/image11.webp"
                   alt="Students learning" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                  className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-              </div>
+              </motion.div>
 
-              {/* Floating Rating Card */}
-              <div className="absolute bottom-2 left-2 md:bottom-4 md:left-4 lg:bottom-8 lg:-left-6 bg-slate-900/90 backdrop-blur-md p-3 md:p-4 lg:p-6 rounded-xl md:rounded-2xl lg:rounded-3xl shadow-xl border border-white/10 max-w-[180px] md:max-w-[220px] lg:max-w-[280px]">
-                <div className="flex items-center gap-2 md:gap-3 lg:gap-4">
-                  <div className="bg-gradient-to-br from-orange-500 to-pink-600 p-2 md:p-3 lg:p-4 rounded-xl md:rounded-2xl text-white shadow-lg shadow-orange-500/20">
-                    <Users className="w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8" />
+              {/* Floating Rating Card - Bouncy */}
+              <motion.div 
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute bottom-8 left-0 md:-left-8 bg-white p-4 rounded-3xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border-4 border-white z-20 max-w-[200px]"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-yellow-100 p-3 rounded-2xl text-yellow-600">
+                    <Users className="w-6 h-6" />
                   </div>
                   <div>
                     <div className="flex items-center gap-0.5 mb-1">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3 h-3 lg:w-4 lg:h-4 fill-yellow-500 text-yellow-500" />
+                        <Star key={i} className="w-3 h-3 fill-orange-400 text-orange-400" />
                       ))}
                     </div>
-                    <p className="font-black text-lg md:text-xl lg:text-2xl text-white">4.9/5</p>
-                    <p className="text-[10px] md:text-xs text-slate-400 font-semibold">
-                      From 500+ happy families
-                    </p>
+                    <p className="font-black text-xl text-slate-800">4.9/5</p>
+                    <p className="text-[10px] text-slate-400 font-bold uppercase">500+ Families</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* Floating Achievement Badge */}
-              <div className="absolute top-2 right-2 md:top-4 md:right-4 lg:top-8 lg:-right-6 bg-gradient-to-br from-purple-600 to-pink-600 p-3 md:p-4 lg:p-6 rounded-xl md:rounded-2xl lg:rounded-3xl shadow-xl shadow-purple-900/30 border border-white/10">
-                <div className="text-center">
-                  <Award className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 text-white mx-auto mb-1 md:mb-2 drop-shadow-md" />
-                  <p className="font-black text-xl md:text-2xl lg:text-3xl text-white drop-shadow-sm">12+</p>
-                  <p className="text-[10px] md:text-xs text-white/90 font-bold uppercase tracking-wide">
-                    Years Excellence
-                  </p>
-                </div>
-              </div>
+              {/* Floating Achievement Badge - Rotating */}
+              <motion.div 
+                animate={{ rotate: [0, 5, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-8 right-0 md:-right-8 bg-gradient-to-br from-purple-500 to-indigo-600 p-5 rounded-3xl shadow-xl shadow-purple-200 z-20 border-4 border-white text-center transform rotate-3"
+              >
+                <Award className="w-10 h-10 text-white mx-auto mb-1" />
+                <p className="font-black text-3xl text-white">12+</p>
+                <p className="text-[10px] text-white/90 font-bold uppercase tracking-wide">Years Excellence</p>
+              </motion.div>
             </div>
           </div>
 
           {/* Stats Section */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-16 lg:mb-20">
-            <StatCard value="500+" label="Happy Students" icon={Users} />
-            <StatCard value="25+" label="Expert Faculty" icon={Award} />
-            <StatCard value="98%" label="Success Rate" icon={TrendingUp} />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-20">
+            <StatCard value="500+" label="Happy Students" icon={Users} color="yellow" />
+            <StatCard value="25+" label="Expert Faculty" icon={Award} color="pink" />
+            <StatCard value="98%" label="Success Rate" icon={TrendingUp} color="blue" />
           </div>
 
           {/* Features Grid */}
-          <div className="space-y-6 md:space-y-8">
+          <div className="space-y-10">
             <div className="text-center max-w-2xl mx-auto">
-              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 md:mb-4">
-                Why Choose <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Our School</span>
+              <h3 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">
+                Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">Our School?</span>
               </h3>
-              <p className="text-sm md:text-base lg:text-lg text-slate-400">
-                Discover what makes us the perfect choice for your child's educational journey
+              <p className="text-lg text-slate-500 font-medium">
+                Discover what makes us the perfect choice for your child's educational adventure
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {features.map((feature, idx) => (
                 <FeatureCard key={idx} {...feature} />
               ))}
